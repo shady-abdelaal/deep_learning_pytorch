@@ -11,3 +11,15 @@ with zero, but I was surprised with the capabilities of get_dummies function.
 
 Then concatinating these hot encoded columns to the data was so easy too using:
 one_hot_data = pd.concat([data, pd.get_dummies(data['rank'], prefix='rank')], axis=1)
+
+
+Also, random choosing for the training vs the testing data. This came to the rescue.
+
+sample = np.random.choice(processed_data.index, size=int(len(processed_data)*0.9), replace=False)
+train_data, test_data = processed_data.iloc[sample], processed_data.drop(sample)
+
+np.random.choice function does what I would have done in a few steps, first using rand function to generate rundom numbers, then 
+in a for loop, add these values whose indices are gnerated to a new list.
+
+Also, iloc function is very efficient from pandas library, it returns the whole row with the given number. Drop performs the opposite too.
+So, in just 1 line, we were able to randomly select rows and assign t hem to train_data & the rest are assigned to test_data.
